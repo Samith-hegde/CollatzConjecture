@@ -9,10 +9,9 @@
 
 int main()
 {
-	int n=0;
 	int k=0;
 	
-	pid_t pid;
+	pid_t pid;  // pid_t creates a process_id variable and stores the process_id of the current (parent) process, which can be used to access different process attributes
 
 		do
 		{
@@ -20,9 +19,9 @@ int main()
   			scanf("%d", &k);	
 		}while (k <= 0);
 
-		pid = fork();
+		pid = fork();  // fork() system call creates a child process, and returns process ID. Both the parent and child processes run concurrently after this line.
 
-		if (pid == 0)
+		if (pid == 0)  // fork() returns a 0 to the newly created child proccess, and the process ID (non-zero integer of the parent process)
 		{
 			printf("Child is working...\n");
 			printf("%d\n",k);
@@ -40,13 +39,15 @@ int main()
 				printf("%d\n",k);
 			}
 		
-			printf("Child process is done.\n");
+			printf("k in child process = %d\n", k);
+			printf("Child process (%d) is done.\n", pid);
 		}
 		else
 		{
 			printf("Parent process is waiting on child process...\n");
-			wait();
-			printf("Parent process is done.\n");
+			wait(); // The Parent Process waits until the child process completes execution, that is returns a value (in this case, 0)
+			printf("Parent process (%d) is done.\n", pid);
+			printf("k in parent process = %d\n", k);
 		}
 	return 0; 
 }
