@@ -4,9 +4,14 @@ CS252 Assignment
 Question 3.21
 
 In the written program (in the file main.c), the child process will output the sequence of numbers obtained from the algorithm as specified under the conditions of the Collatz conjecture.
-Here, the parent and child processes havev their own copies of the data.
+Here, the parent and child processes have their own copies of the data.
 
-When the program performs fork(), it enters into an if loop: if pid==1 (i.e., if it is busy), then it waits till it equals 0 (not busy).
-When it becomes 0, it is ready to perform the necessary calculations.
-It checks to see if the number is even or odd and performs the calculation as specified by the appropriate formula. This keeps repeating until the sequence reaches 1, upon which it breaks out of the loop.
+The fork() system call creates a child process, and returns process ID. Both the parent and child processes run concurrently after this line. 
+The fork() system call always returns 0 to the newly created process, and the process ID to the parent process (a non-negative integer).
+
+The parent process executes  first, whose process ID is non zero, and hence, the code enters the else block. Here, the wait() function is called, and so, the parent process waits until the child process completes execution, that is, returns a value (in this case, 0).
+
+The child process executes, whose process ID is zero, and hence, the code enters the if (pid==0) block. Here, the algorithm for the Collatz conjecture is executed.
+
+After child process is done, process ID resumes execution and the program is completed. 
 
